@@ -39,8 +39,9 @@ public class TeleOp extends OpMode {
 
     @Override
     public void loop() {
-        while(gamepad1.a) {
-            
+        // Handle the arm rotation and extension
+        while(gamepad1.left_bumper) {
+            armController.adjustX(gamepad1.left_stick_x);
 
 
         }

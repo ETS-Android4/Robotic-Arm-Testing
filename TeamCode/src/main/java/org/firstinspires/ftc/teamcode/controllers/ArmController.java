@@ -22,7 +22,6 @@ public class ArmController {
      */
     private DcMotor[] dcMotorList = new DcMotor[1];
 
-
     public ArmController(HardwareMap hardwareMap) {
         if(hardwareMap == null) { return; }
 
@@ -33,27 +32,42 @@ public class ArmController {
         // TODO: Add this back to make sure the arm starts inside the robot
         // resetServoPositions();
 
-        // Add the turntable motor
+        // Add the turntable motor and set its Zero power to brake
+        // TODO: Make sure that the motor spins the right way relative to the robot
         dcMotorList[0] = hardwareMap.get(DcMotor.class, "motor5");
-    }
-
-    public void adjustX(int ticks) {
-
+        dcMotorList[0].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     /**
-     * Handle the
-     * @param amount
+     * Rotate the turn table
+     * @param x
      */
-    public void adjustY(double amount) {
-
+    public void adjustX(double x) {
+        dcMotorList[0].setPower(x);
     }
 
     /**
      * Handle the up and down motion of the arm
-     * @param amount
+     * @param y
      */
-    public void adjustZ(double amount) {
+    public void adjustY(double y) {
+        if(y > 0) {
+            // Positive
+            double calcTicks = (y + 0.01) * 0.02;
+            servoList[0].setPosition(servoList[0].getPosition() + (calcTicks));
+        } else {
+            // Negative
+            double calcTicks = (y - 0.01) * 0.02;
+            servoList[0].setPosition(servoList[0].getPosition() - (calcTicks));
+        }
+
+    }
+
+    /**
+     * Handle the extension and retraction swinging motion
+     * @param z
+     */
+    public void adjustZ(double z) {
 
     }
 
