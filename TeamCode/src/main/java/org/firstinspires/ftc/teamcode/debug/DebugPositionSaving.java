@@ -49,9 +49,16 @@ public class DebugPositionSaving extends LinearOpMode {
         telemetry.update();
 
         while(!isStopRequested() && opModeIsActive()) {
-            armController.adjustX(gamepad1.left_stick_x);
-            armController.adjustY(gamepad1.left_stick_y);
-            armController.adjustZ(gamepad1.right_stick_y);
+            if(gamepad1.left_bumper) {
+                armController.adjustX(gamepad1.left_stick_x);
+                armController.adjustY(gamepad1.left_stick_y);
+                armController.adjustZ(gamepad1.right_stick_y);
+            } else {
+                if(!armController.getDcMotorList()[0].isBusy()) {
+                    armController.getDcMotorList()[0].setPower(0);
+                }
+            }
+
 
             // Handle setting logic (X)
             if(gamepad1.x && !pressingX) {
