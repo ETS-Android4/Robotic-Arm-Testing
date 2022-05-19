@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.utils.ArmConfiguration;
 import org.firstinspires.ftc.teamcode.utils.ServoPositions;
 
 public class ArmController {
@@ -16,9 +17,8 @@ public class ArmController {
      * Servo List
      * @servo1 Index 0
      * @servo2 Index 1
-     * @servo3 Index 2
      */
-    private Servo[] servoList =  new Servo[3];
+    private Servo[] servoList =  new Servo[2];
     private CRServo ejector;
 
     /**
@@ -45,7 +45,6 @@ public class ArmController {
         // Initialize and set the servos to their default positions
         servoList[0] = hardwareMap.get(Servo.class, "artic1");
         servoList[1] = hardwareMap.get(Servo.class, "artic2");
-        servoList[2] = hardwareMap.get(Servo.class, "artic3");
         ejector = hardwareMap.get(CRServo.class,"spinner");
         // TODO: Add this back to make sure the arm starts inside the robot
         resetServoPositions();
@@ -122,7 +121,7 @@ public class ArmController {
     public void adjustZ(double z) {
         // z = -z;
         if(z != 0) {
-            double calcTicks = (z + 0.01) / 250;
+            double calcTicks = z / 250;
             if(servoList[1].getPosition() + calcTicks < ServoPositions.servo2_Maximum || servoList[1].getPosition() + calcTicks > ServoPositions.servo2_Minimum) {
                 servoList[1].setPosition(servoList[1].getPosition() + (calcTicks));
             } else {
@@ -139,16 +138,21 @@ public class ArmController {
     /**
      * Makes the motor run to a certain encoder position
      */
-    public void motorRunTo() {
-
+    public void motorRunTo(int tick) {
+        dcMotorList[0].setPower(0);
+        dcMotorList[0].setTargetPosition(tick);
+        dcMotorList[0].setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        dcMotorList[0].setPower(ArmConfiguration.TurntableRunToPositionPower);
     }
 
     /**
      * Makes a motor run with a certain amount of ticks
      */
-    public void motorRunWith() {
-
-
+    public void motorRunWith(int ticks) {
+        dcMotorList[0].setPower(0);
+        dcMotorList[0].setTargetPosition(dcMotorList[0].getCurrentPosition() + ticks);
+        dcMotorList[0].setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        dcMotorList[0].setPower(ArmConfiguration.TurntableRunToPositionPower);
     }
 
     /**
@@ -167,5 +171,10 @@ public class ArmController {
         return this.dcMotorList;
     }
 
-
+    /**
+     * Getter
+     */
+    public Servo[] getServoList() {
+        return this.servoList;
+    }
 }
