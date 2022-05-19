@@ -85,6 +85,7 @@ public class ArmController {
      * @param x power to set
      */
     public void adjustX(double x) {
+        dcMotorList[0].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         dcMotorList[0].setPower(x);
     }
 
@@ -136,6 +137,21 @@ public class ArmController {
 
 
     /**
+     * Makes the motor run to a certain encoder position
+     */
+    public void motorRunTo() {
+
+    }
+
+    /**
+     * Makes a motor run with a certain amount of ticks
+     */
+    public void motorRunWith() {
+
+
+    }
+
+    /**
      * Set the servos to their default positions
      */
     public void resetServoPositions() {
@@ -144,7 +160,12 @@ public class ArmController {
         // servoList[2].setPosition(ServoPositions.servo3_Default);
     }
 
-
+    /**
+     * Getter
+     */
+    public DcMotor[] getDcMotorList() {
+        return this.dcMotorList;
+    }
 
 
 }

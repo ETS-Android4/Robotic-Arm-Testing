@@ -19,6 +19,11 @@ public class TeleOp extends OpMode {
     private DcMotor[] driveTrain = new DcMotor[4];
 
     /**
+     * Turntable Motor
+     */
+    private DcMotor turntableMotor = null;
+
+    /**
      * To handle the arm movement
      */
     private ArmController armController;
@@ -40,6 +45,9 @@ public class TeleOp extends OpMode {
                 driveTrain[i].setDirection(DcMotorSimple.Direction.REVERSE);
             }
         }
+
+        // Get the turntable motor from the arm controller
+        turntableMotor = armController.getDcMotorList()[0];
     }
 
 
@@ -82,6 +90,8 @@ public class TeleOp extends OpMode {
             driveTrain[2].setPower(rfPower);
             driveTrain[3].setPower(rbPower);
         }
+
+        telemetry.addData("Turntable Encoder Pos: ", turntableMotor.getCurrentPosition());
     }
 
     /**
