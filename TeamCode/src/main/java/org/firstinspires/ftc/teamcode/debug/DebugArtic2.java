@@ -18,7 +18,7 @@ public class DebugArtic2 extends LinearOpMode {
             if(gamepad1.dpad_up && !qUp)
             {
                 qUp = true;
-                if(pos <=0.9) {
+                if(pos <=0.95) {
                     pos+=0.1;
                 }
                 artic.setPosition(pos);

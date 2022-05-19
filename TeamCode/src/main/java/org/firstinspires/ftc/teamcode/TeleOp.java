@@ -43,11 +43,14 @@ public class TeleOp extends OpMode {
     }
 
 
+
     @Override
     public void loop() {
         // Handle the arm rotation and extension
         if(gamepad1.left_bumper) {
             armController.adjustX(gamepad1.left_stick_x);
+            armController.adjustY(gamepad1.left_stick_y);
+            armController.adjustZ(gamepad1.right_stick_y);
             freezeDriving();
         }
         else {
@@ -79,9 +82,11 @@ public class TeleOp extends OpMode {
             driveTrain[2].setPower(rfPower);
             driveTrain[3].setPower(rbPower);
         }
-
-
     }
+
+    /**
+     * Stops the driving by setting all motor powers to o
+     */
     public void freezeDriving()
     {
         for(DcMotor motor : driveTrain) {

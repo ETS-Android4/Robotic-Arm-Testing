@@ -14,7 +14,7 @@ public class DebugTurntable extends LinearOpMode {
         DcMotor turntable = hardwareMap.get(DcMotor.class,"turntable");
         turntable.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         turntable.setTargetPosition(turntable.getCurrentPosition());
-        turntable.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        turntable.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         turntable.setPower(0);
         int pos = turntable.getCurrentPosition();
         waitForStart();
@@ -23,23 +23,25 @@ public class DebugTurntable extends LinearOpMode {
             if(gamepad1.dpad_up && !qUp)
             {
                 qUp = true;
-                pos+=50;
-                turntable.setTargetPosition(pos);
+                // pos+=50;
+                // turntable.setTargetPosition(pos);
                 turntable.setPower(0.5);
             }
             else if(!gamepad1.dpad_up && qUp)
             {
+                turntable.setPower(0);
                 qUp = false;
             }
             if(gamepad1.dpad_down && !qDown)
             {
                 qDown = true;
-                pos-=50;
-                turntable.setTargetPosition(pos);
-                turntable.setPower(0.5);
+                // pos-=50;
+                // turntable.setTargetPosition(pos);
+                turntable.setPower(-0.5);
             }
             else if(!gamepad1.dpad_down && qDown)
             {
+                turntable.setPower(0);
                 qDown = false;
             }
             telemetry.addData("Pos: ", pos);
