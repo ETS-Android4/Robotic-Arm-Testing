@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.utils.ArmConfiguration;
-import org.firstinspires.ftc.teamcode.utils.ServoPositions;
+import org.firstinspires.ftc.teamcode.config.ArmConfiguration;
+import org.firstinspires.ftc.teamcode.config.ServoPositions;
 
 public class ArmController {
 

@@ -38,6 +38,8 @@ public class DebugPositionSaving extends LinearOpMode {
     private boolean pressingA = false;
     private String aPositionBind = null;
 
+    private boolean pressingB = false;
+
     @Override
     public void runOpMode() throws InterruptedException {
         armController = new ArmController(hardwareMap);
@@ -75,6 +77,8 @@ public class DebugPositionSaving extends LinearOpMode {
                 if(diff >= 3) {
                     gamepad1.rumble(1000);
                     xPositionBind = savePosition();
+                    initialPressTimestamp = 0;
+                    pressingX = false;
                 }
             }
 
@@ -98,14 +102,33 @@ public class DebugPositionSaving extends LinearOpMode {
                 }
             }
 
+            // Handle deleting logic (B)
+            if(gamepad1.b && !pressingB) {
+                initialPressTimestamp = 0;
+                pressingB = true;
+            } else if(!gamepad1.b && pressingB) {
+                pressingB = false;
+            } else if(gamepad1.b && pressingB) {
+                double diff = getRuntime() - initialPressTimestamp;
+                if(diff >= 3) {
+                    gamepad1.rumble(1000);
+                    for (Map.Entry element : positionMap.entrySet()) {
+                        positionMap.remove(element.getKey());
+                    }
+                }
+            }
+
+            // Print positions to telemetry
             telemetry.addData("Turntable Position: ", armController.getDcMotorList()[0].getCurrentPosition());
             telemetry.addData("Number of saved positions: ", numSavedPositions);
 
+            // Print saved positions
             for (Map.Entry mapElement : positionMap.entrySet()) {
                 telemetry.addData("Position Name: ", mapElement.getKey());
                 telemetry.addData("     turntable pos: ", positionMap.get(mapElement.getKey()).getTurntable_pos());
             }
 
+            // Update telemetry
             telemetry.update();
         }
 

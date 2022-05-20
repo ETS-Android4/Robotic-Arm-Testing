@@ -1,9 +1,5 @@
-package org.firstinspires.ftc.teamcode.utils;
+package org.firstinspires.ftc.teamcode.config;
 
-
-import com.qualcomm.robotcore.hardware.Servo;
-
-import java.util.HashMap;
 
 public class ServoPositions {
 

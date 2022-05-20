@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.utils;
+package org.firstinspires.ftc.teamcode.config;
 
 public class ArmConfiguration {
 
@@ -18,4 +18,21 @@ public class ArmConfiguration {
      */
     public static int ServoSpeedScalar = 250;
 
+    /**
+     * The length of the beam that is holding the arm up
+     * @unit MILLIMETERS
+     */
+    public static double baseBeamLength = 101.6;
+
+    /**
+     * The length of the arm that is connected to the first joint of servo1
+     * @unit MILLIMETERS
+     */
+    public static double armBeamLength = 406.4;
+
+    /**
+     * The length of the bucket arm that is joined to the first joint of servo2
+     * @unit MILLIMETERS
+     */
+    public static double thirdArmLength = 101.6;
 }
