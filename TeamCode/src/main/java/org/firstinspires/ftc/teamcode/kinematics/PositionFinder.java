@@ -11,7 +11,7 @@ public class PositionFinder {
      * @param position the current position of the servo
      * @return the final position of the joint
      */
-    public Coordinate2D calcSecondJointPosition(double position) {
+    public static Coordinate2D calcSecondJointPosition(double position) {
         // Find the first angle
         double ticksPerDegree = 1 / 180;
         double minAngleDegrees = ServoPositions.servo1_Minimum * ticksPerDegree;
@@ -44,7 +44,7 @@ public class PositionFinder {
      * @param position2 the position of servo2
      * @return a new coordinate object of the third joint
      */
-    public Coordinate2D calcThirdJointPosition(double position1, double position2) {
+    public static Coordinate2D calcThirdJointPosition(double position1, double position2) {
         double ticksPerDegree = 1 / 180;
         // Calculate the secondary joint to help find the third
         Coordinate2D secondJointPosition = calcSecondJointPosition(position1);

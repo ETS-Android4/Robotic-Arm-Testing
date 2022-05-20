@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.teamcode.controllers.ArmController;
 import org.firstinspires.ftc.teamcode.controllers.PositionController;
 import org.firstinspires.ftc.teamcode.kinematics.Position;
+import org.firstinspires.ftc.teamcode.kinematics.PositionFinder;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -120,12 +121,21 @@ public class DebugPositionSaving extends LinearOpMode {
 
             // Print positions to telemetry
             telemetry.addData("Turntable Position: ", armController.getDcMotorList()[0].getCurrentPosition());
-            telemetry.addData("Number of saved positions: ", numSavedPositions);
+            telemetry.addData("servo1 Position: ", armController.getServoList()[0].getPosition());
+            telemetry.addData("servo2 Position: ", armController.getServoList()[1].getPosition());
+            telemetry.addLine();
+
+            // Print testing stuff to telemetry
+            telemetry.addLine("Joint Two Position: ");
+            telemetry.addLine("      x: " + PositionFinder.calcSecondJointPosition(armController.getServoList()[0].getPosition()).getX());
+            telemetry.addLine("      y: " + PositionFinder.calcSecondJointPosition(armController.getServoList()[0].getPosition()).getY());
+            telemetry.addLine();
 
             // Print saved positions
+            telemetry.addData("Number of saved positions: ", numSavedPositions);
             for (Map.Entry mapElement : positionMap.entrySet()) {
                 telemetry.addData("Position Name: ", mapElement.getKey());
-                telemetry.addData("     turntable pos: ", positionMap.get(mapElement.getKey()).getTurntable_pos());
+                telemetry.addData("     Turntable Position: ", positionMap.get(mapElement.getKey()).getTurntable_pos());
             }
 
             // Update telemetry
