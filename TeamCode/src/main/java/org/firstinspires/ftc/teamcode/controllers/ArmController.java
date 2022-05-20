@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -60,7 +59,6 @@ public class ArmController {
      * Spin the intake with positive power (hopefully forwards)
      */
     public void spinIntake() {
-        callcount++;
         ejector.setPower(1);
     }
 
@@ -68,7 +66,6 @@ public class ArmController {
      * Spin the intake with 0 power (hopefully it stops)
      */
     public void stopIntake() {
-        callcount++;
         ejector.setPower(0);
     }
 
@@ -160,9 +157,7 @@ public class ArmController {
      */
     public void resetServoPositions() {
         servoList[0].setPosition(ServoPositions.servo1_Default);
-        servoList[1].setPosition(ServoPositions.servo2_Default);
-        // servoList[2].setPosition(ServoPositions.servo3_Default);
-    }
+        servoList[1].setPosition(ServoPositions.servo2_Default);}
 
     /**
      * Getter
