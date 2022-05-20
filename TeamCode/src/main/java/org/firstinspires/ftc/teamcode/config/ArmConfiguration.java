@@ -22,17 +22,19 @@ public class ArmConfiguration {
      * The length of the beam that is holding the arm up
      * @unit MILLIMETERS
      */
-    public static double baseBeamLength = 101.6;
+    public static double baseBeamLength = 125;
 
     /**
      * The length of the arm that is connected to the first joint of servo1
      * @unit MILLIMETERS
      */
-    public static double armBeamLength = 406.4;
+    public static double armBeamLength = 312.42;
 
     /**
      * The length of the bucket arm that is joined to the first joint of servo2
      * @unit MILLIMETERS
      */
-    public static double thirdArmLength = 101.6;
+    public static double thirdArmLength = 120;
+
+    public static double robotBaseToServo1Length = 98;
 }

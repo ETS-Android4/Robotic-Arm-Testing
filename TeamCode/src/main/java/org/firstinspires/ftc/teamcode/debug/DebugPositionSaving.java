@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.controllers.ArmController;
 import org.firstinspires.ftc.teamcode.controllers.PositionController;
 import org.firstinspires.ftc.teamcode.kinematics.Position;
 import org.firstinspires.ftc.teamcode.kinematics.PositionFinder;
+import org.firstinspires.ftc.teamcode.kinematics.coords.Coordinate2D;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -127,8 +128,12 @@ public class DebugPositionSaving extends LinearOpMode {
 
             // Print testing stuff to telemetry
             telemetry.addLine("Joint Two Position: ");
-            telemetry.addLine("      x: " + PositionFinder.calcSecondJointPosition(armController.getServoList()[0].getPosition()).getX());
-            telemetry.addLine("      y: " + PositionFinder.calcSecondJointPosition(armController.getServoList()[0].getPosition()).getY());
+            if(armController.getServoList()[0].getPosition() != 0) {
+                Coordinate2D pos = PositionFinder.calcSecondJointPosition(armController.getServoList()[0].getPosition(), telemetry);
+                telemetry.addData("     x: ", pos.getX());
+                telemetry.addData("     y: ", pos.getY());
+            }
+
             telemetry.addLine();
 
             // Print saved positions
