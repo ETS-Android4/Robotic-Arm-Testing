@@ -41,6 +41,11 @@ public class DebugArtic1 extends LinearOpMode {
             {
                 qDown = false;
             }
+
+            if(gamepad1.a)
+            {
+
+            }
             telemetry.addData("Pos: ", pos);
             telemetry.update();
         }

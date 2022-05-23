@@ -120,6 +120,17 @@ public class DebugPositionSaving extends LinearOpMode {
                 }
             }
 
+
+            if(gamepad1.dpad_up)
+            {
+                armController.spinIntake();
+            }
+            else if(gamepad1.dpad_down)
+            {
+                armController.reverseIntake();
+            }
+            else armController.stopIntake();
+
             // Print positions to telemetry
             telemetry.addData("Turntable Position: ", armController.getDcMotorList()[0].getCurrentPosition());
             telemetry.addData("servo1 Position: ", armController.getServoList()[0].getPosition());

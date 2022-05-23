@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -27,6 +28,7 @@ public class TeleOp extends OpMode {
      * To handle the arm movement
      */
     private ArmController armController;
+
     @Override
     public void init() {
         armController = new ArmController(hardwareMap);
@@ -90,6 +92,7 @@ public class TeleOp extends OpMode {
             driveTrain[2].setPower(rfPower);
             driveTrain[3].setPower(rbPower);
         }
+
 
         telemetry.addData("Turntable Encoder Pos: ", turntableMotor.getCurrentPosition());
     }

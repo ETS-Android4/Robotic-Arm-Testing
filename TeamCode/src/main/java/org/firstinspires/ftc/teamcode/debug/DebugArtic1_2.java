@@ -3,7 +3,11 @@ package org.firstinspires.ftc.teamcode.debug;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.teamcode.controllers.ArmController;
 
 @TeleOp
 public class DebugArtic1_2 extends LinearOpMode {
@@ -11,15 +15,30 @@ public class DebugArtic1_2 extends LinearOpMode {
     private boolean qL, qR;
     private boolean qA;
     private boolean qB;
+    private DcMotor[] driveTrain = new DcMotor[4];
 
     @Override
     public void runOpMode() throws InterruptedException {
         Servo artic = hardwareMap.get(Servo.class,"artic1");
         Servo artic2 = hardwareMap.get(Servo.class,"artic2");
         CRServo spinner = hardwareMap.get(CRServo.class,"spinner");
-
+        ArmController armController = new ArmController(hardwareMap);
         double pos = artic.getPosition();
         double pos2 = artic2.getPosition();
+        driveTrain[0] = hardwareMap.get(DcMotor.class, "lf");
+        driveTrain[1] = hardwareMap.get(DcMotor.class, "lb");
+        driveTrain[2] = hardwareMap.get(DcMotor.class, "rf");
+        driveTrain[3] = hardwareMap.get(DcMotor.class, "rb");
+
+        for(int i = 0; i < driveTrain.length; i++) {
+            driveTrain[i].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            driveTrain[i].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            driveTrain[i].setPower(0);
+            if(i == 0 || i == 3)
+            {
+                driveTrain[i].setDirection(DcMotorSimple.Direction.REVERSE);
+            }
+        }
         waitForStart();
         while(opModeIsActive() && !isStopRequested()) {
             if (gamepad1.dpad_up && !qUp) {
@@ -61,11 +80,10 @@ public class DebugArtic1_2 extends LinearOpMode {
             if (gamepad1.a && !qA)
             {
                 qA = true;
-                pos = 0.1;
-                pos2 = 0.2;
+                pos = 0.27;
+                pos2 = 0.99;
                 artic.setPosition(pos);
                 artic2.setPosition(pos2);
-                spinner.setPower(0);
             }
             else if(!gamepad1.a && qA)
             {
@@ -74,11 +92,10 @@ public class DebugArtic1_2 extends LinearOpMode {
             if (gamepad1.b && !qB)
             {
                 qB = true;
-                pos = 0.05;
-                pos2 = 0.7;
+                pos = 0.27;
+                pos2 = 0.3;
                 artic.setPosition(pos);
                 artic2.setPosition(pos2);
-                spinner.setPower(1);
             }
             else if(!gamepad1.a && qB)
             {
@@ -88,6 +105,32 @@ public class DebugArtic1_2 extends LinearOpMode {
             {
                 spinner.setPower(0);
             }
+            if(gamepad1.x)
+            {
+                spinner.setPower(1);
+            }
+            if(gamepad1.left_bumper) {
+                armController.adjustX(gamepad1.left_stick_x);
+            }
+            else {
+                double y = -gamepad1.left_stick_y;
+                double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
+                double rx = -gamepad1.right_stick_x;
+
+                double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+                double lfPower =(y + x + rx) / denominator;
+                double lbPower = (y - x + rx) / denominator;
+                double rfPower = (y - x - rx) / denominator;
+                double rbPower = (y + x - rx) / denominator;
+
+                driveTrain[0].setPower(lfPower);
+                driveTrain[1].setPower(lbPower);
+                driveTrain[2].setPower(rfPower);
+                driveTrain[3].setPower(rbPower);
+            }
+
+
+
             telemetry.addData("Pos: ", pos);
             telemetry.addData("Pos2: ", pos2);
             telemetry.update();
