@@ -92,7 +92,7 @@ public class DebugArtic1_2 extends LinearOpMode {
             if (gamepad1.b && !qB)
             {
                 qB = true;
-                pos = 0.27;
+                pos = 0.17;
                 pos2 = 0.3;
                 artic.setPosition(pos);
                 artic2.setPosition(pos2);
@@ -109,7 +109,7 @@ public class DebugArtic1_2 extends LinearOpMode {
             {
                 spinner.setPower(1);
             }
-            if(gamepad1.left_bumper) {
+            if(gamepad1.right_bumper) {
                 armController.adjustX(gamepad1.left_stick_x);
             }
             else {
@@ -119,7 +119,7 @@ public class DebugArtic1_2 extends LinearOpMode {
 
                 double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
                 double lfPower =(y + x + rx) / denominator;
-                double lbPower = (y - x + rx) / denominator;
+                double lbPower = (y - x + rx) / denominator*1.3;
                 double rfPower = (y - x - rx) / denominator;
                 double rbPower = (y + x - rx) / denominator;
 
