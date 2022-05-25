@@ -16,6 +16,8 @@ public class DebugArtic1_2 extends LinearOpMode {
     private boolean qA;
     private boolean qB;
     private DcMotor[] driveTrain = new DcMotor[4];
+    private boolean qX;
+    private boolean qY;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -77,37 +79,40 @@ public class DebugArtic1_2 extends LinearOpMode {
             } else if (!gamepad1.dpad_left && qL) {
                 qL = false;
             }
-            if (gamepad1.a && !qA)
-            {
+            if (gamepad1.a && !qA) {
                 qA = true;
-                pos = 0.27;
+                pos = 0.32;
                 pos2 = 0.99;
                 artic.setPosition(pos);
                 artic2.setPosition(pos2);
-            }
-            else if(!gamepad1.a && qA)
-            {
+            } else if (!gamepad1.a && qA) {
                 qA = false;
             }
-            if (gamepad1.b && !qB)
-            {
+            if (gamepad1.b && !qB) {
                 qB = true;
-                pos = 0.17;
+                pos = .28;
                 pos2 = 0.3;
                 artic.setPosition(pos);
                 artic2.setPosition(pos2);
-            }
-            else if(!gamepad1.a && qB)
-            {
+            } else if (!gamepad1.a && qB) {
                 qB = false;
             }
-            if(gamepad1.y)
+            if (gamepad1.y && !qY) {
+                qY = true;
+                pos = .5;
+                pos2 = 0.3;
+                artic.setPosition(pos);
+                artic2.setPosition(pos2);
+            } else if (!gamepad1.y && qY)
             {
-                spinner.setPower(0);
+                qY = false;
             }
-            if(gamepad1.x)
+            if (gamepad1.x && !qX) {
+                qX = true;
+                spinner.setPower(spinner.getPower() == 1 ? 0 : 1);
+            } else if (qX && !gamepad1.x)
             {
-                spinner.setPower(1);
+                qX = false;
             }
             if(gamepad1.right_bumper) {
                 armController.adjustX(gamepad1.left_stick_x);
