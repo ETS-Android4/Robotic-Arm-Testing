@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.controllers.ArmController;
 
-@TeleOp
+@TeleOp(name="A - A TeleOp main")
 public class DebugArtic1_2 extends LinearOpMode {
     private boolean qUp, qDown;
     private boolean qL, qR;
@@ -99,7 +99,7 @@ public class DebugArtic1_2 extends LinearOpMode {
             }
             if (gamepad1.y && !qY) {
                 qY = true;
-                pos = .5;
+                pos = .95;
                 pos2 = 0.3;
                 artic.setPosition(pos);
                 artic2.setPosition(pos2);
@@ -118,7 +118,7 @@ public class DebugArtic1_2 extends LinearOpMode {
                 armController.adjustX(gamepad1.left_stick_x);
             }
             else {
-                double y = -gamepad1.left_stick_y;
+                double y = gamepad1.left_stick_y;
                 double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
                 double rx = -gamepad1.right_stick_x;
 
